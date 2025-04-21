@@ -11,13 +11,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
   SidebarSeparator,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 import {Button} from '@/components/ui/button';
 import {Icons} from '@/components/icons';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
 const navigation = [
   {
@@ -48,6 +49,9 @@ const navigation = [
 ];
 
 export default function Home() {
+  const router = useRouter();
+  console.log('Home component rendering');
+
   return (
     <SidebarProvider>
       <div className="flex h-screen">
@@ -60,7 +64,14 @@ export default function Home() {
               {navigation.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.href}>
+                    <Link
+                      href={item.href}
+                      className="flex items-center space-x-2"
+                      onClick={() => {
+                        console.log(`Navigating to ${item.href}`);
+                        router.push(item.href);
+                      }}
+                    >
                       {item.icon}
                       <span>{item.title}</span>
                     </Link>

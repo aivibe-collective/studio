@@ -1,4 +1,3 @@
-// src/ai/flows/generate-learning-activity.ts
 'use server';
 
 /**
@@ -29,6 +28,12 @@ const GenerateLearningActivityOutputSchema = z.object({
 });
 export type GenerateLearningActivityOutput = z.infer<typeof GenerateLearningActivityOutputSchema>;
 
+/**
+ * Generates an interactive learning activity based on the provided input.
+ *
+ * @param {GenerateLearningActivityInput} input - The input for generating the learning activity.
+ * @returns {Promise<GenerateLearningActivityOutput>} - A promise that resolves to the generated learning activity output.
+ */
 export async function generateLearningActivity(input: GenerateLearningActivityInput): Promise<GenerateLearningActivityOutput> {
   return generateLearningActivityFlow(input);
 }
@@ -53,12 +58,10 @@ const generateLearningActivityPrompt = ai.definePrompt({
     }),
   },
   prompt: `You are an experienced instructional designer. Your goal is to generate an engaging and effective interactive learning activity based on the provided information.
-
   Topic: {{{topic}}}
   Learning Objectives: {{{learningObjectives}}}
   Target Audience: {{{targetAudience}}}
   Previous Activities: {{{previousActivities}}}
-
   Consider the topic, learning objectives, and target audience to design an activity that is both educational and enjoyable. Provide a title, detailed description, the type, estimated duration, and resources needed for the activity.
   `,
 });

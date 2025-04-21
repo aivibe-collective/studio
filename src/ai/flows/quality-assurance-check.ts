@@ -1,4 +1,3 @@
-// Use server directive is required to run Genkit flows in Next.js
 'use server';
 
 /**
@@ -26,6 +25,12 @@ const QualityAssuranceCheckOutputSchema = z.object({
 });
 export type QualityAssuranceCheckOutput = z.infer<typeof QualityAssuranceCheckOutputSchema>;
 
+/**
+ * Checks the quality and mission alignment of the provided content.
+ *
+ * @param {QualityAssuranceCheckInput} input - The input for the quality assurance check.
+ * @returns {Promise<QualityAssuranceCheckOutput>} - A promise that resolves to the quality assurance check output.
+ */
 export async function qualityAssuranceCheck(input: QualityAssuranceCheckInput): Promise<QualityAssuranceCheckOutput> {
   return qualityAssuranceCheckFlow(input);
 }
@@ -47,15 +52,10 @@ const prompt = ai.definePrompt({
     }),
   },
   prompt: `You are an AI content quality assurance expert.
-
 You will check the provided content for alignment with the given mission statement and measure its quality based on the defined metrics.
-
 Content: {{{content}}}
-
 Mission Statement: {{{missionStatement}}}
-
 Quality Metrics: {{{qualityMetrics}}}
-
 Provide a missionAlignmentScore (0-1), a qualityScore (0-1), and detailed validationFeedback.
 `,
 });
