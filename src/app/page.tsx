@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -18,6 +17,7 @@ import {
 import {Button} from '@/components/ui/button';
 import {Icons} from '@/components/icons';
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import Link from 'next/link';
 
 const navigation = [
   {
@@ -59,9 +59,11 @@ export default function Home() {
             <SidebarMenu>
               {navigation.map((item) => (
                 <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton href={item.href}>
-                    {item.icon}
-                    <span>{item.title}</span>
+                  <SidebarMenuButton asChild>
+                    <Link href={item.href}>
+                      {item.icon}
+                      <span>{item.title}</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
