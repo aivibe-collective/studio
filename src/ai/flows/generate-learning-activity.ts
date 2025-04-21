@@ -33,6 +33,7 @@ export type GenerateLearningActivityOutput = z.infer<typeof GenerateLearningActi
  *
  * @param {GenerateLearningActivityInput} input - The input for generating the learning activity.
  * @returns {Promise<GenerateLearningActivityOutput>} - A promise that resolves to the generated learning activity output.
+ * @throws {Error} - Throws an error if the learning activity generation fails.
  */
 export async function generateLearningActivity(input: GenerateLearningActivityInput): Promise<GenerateLearningActivityOutput> {
   return generateLearningActivityFlow(input);
@@ -74,6 +75,11 @@ const generateLearningActivityFlow = ai.defineFlow<
   inputSchema: GenerateLearningActivityInputSchema,
   outputSchema: GenerateLearningActivityOutputSchema,
 }, async input => {
-  const {output} = await generateLearningActivityPrompt(input);
-  return output!;
+  try {
+    const {output} = await generateLearningActivityPrompt(input);
+    return output!;
+  } catch (error) {
+    console.error('Error in generateLearningActivityFlow:', error);
+    throw new Error('Failed to generate learning activity. Please try again.');
+  }
 });

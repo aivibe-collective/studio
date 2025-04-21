@@ -30,6 +30,7 @@ export type QualityAssuranceCheckOutput = z.infer<typeof QualityAssuranceCheckOu
  *
  * @param {QualityAssuranceCheckInput} input - The input for the quality assurance check.
  * @returns {Promise<QualityAssuranceCheckOutput>} - A promise that resolves to the quality assurance check output.
+  * @throws {Error} - Throws an error if the quality assurance check fails.
  */
 export async function qualityAssuranceCheck(input: QualityAssuranceCheckInput): Promise<QualityAssuranceCheckOutput> {
   return qualityAssuranceCheckFlow(input);
@@ -68,6 +69,11 @@ const qualityAssuranceCheckFlow = ai.defineFlow<
   inputSchema: QualityAssuranceCheckInputSchema,
   outputSchema: QualityAssuranceCheckOutputSchema,
 }, async input => {
-  const {output} = await prompt(input);
-  return output!;
+  try {
+    const {output} = await prompt(input);
+    return output!;
+  } catch (error) {
+    console.error('Error in qualityAssuranceCheckFlow:', error);
+    throw new Error('Failed to perform quality assurance check. Please try again.');
+  }
 });

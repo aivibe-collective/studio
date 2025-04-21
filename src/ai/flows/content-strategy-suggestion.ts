@@ -35,6 +35,7 @@ export type ContentStrategySuggestionOutput = z.infer<
  *
  * @param {ContentStrategySuggestionInput} input - The input for content strategy suggestion.
  * @returns {Promise<ContentStrategySuggestionOutput>} - A promise that resolves to the content strategy suggestion output.
+ * @throws {Error} - Throws an error if the content strategy suggestion fails.
  */
 export async function suggestContentStrategy(
   input: ContentStrategySuggestionInput
@@ -71,13 +72,12 @@ Suggestions:
 const suggestContentStrategyFlow = ai.defineFlow<
   typeof ContentStrategySuggestionInputSchema,
   typeof ContentStrategySuggestionOutputSchema
->(
-  {
-    name: 'suggestContentStrategyFlow',
-    inputSchema: ContentStrategySuggestionInputSchema,
-    outputSchema: ContentStrategySuggestionOutputSchema,
-  },
-  async input => {
+>({
+  name: 'suggestContentStrategyFlow',
+  inputSchema: ContentStrategySuggestionInputSchema,
+  outputSchema: ContentStrategySuggestionOutputSchema,
+}, async input => {
+ try {
     const contentStrategy = await getContentStrategy();
     const {output} = await prompt({
       ...input,
@@ -88,5 +88,9 @@ const suggestContentStrategyFlow = ai.defineFlow<
       ...contentStrategy,
       suggestions: output!.suggestions,
     };
+  } catch (error) {
+    console.error('Error in suggestContentStrategyFlow:', error);
+    throw new Error('Failed to suggest content strategy. Please try again.');
   }
+ }
 );
