@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/sidebar';
 import {Button} from '@/components/ui/button';
 import {Icons} from '@/components/icons';
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
+import Card, {CardContent, CardDescription, CardHeader, CardTitle} from '@/components/ui/card';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
@@ -67,10 +67,6 @@ export default function Home() {
                     <Link
                       href={item.href}
                       className="flex items-center space-x-2"
-                      onClick={() => {
-                        console.log(`Navigating to ${item.href}`);
-                        router.push(item.href);
-                      }}
                     >
                       {item.icon}
                       <span>{item.title}</span>
@@ -127,3 +123,4 @@ function SidebarGroupLabel({children}: { children: React.ReactNode }) {
     </div>
   );
 }
+

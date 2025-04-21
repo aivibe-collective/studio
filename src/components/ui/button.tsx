@@ -39,6 +39,14 @@ export interface ButtonProps
   asChild?: boolean
 }
 
+/**
+ * Button component.
+ *
+ * @param {ButtonProps} props - The props for the Button component.
+ * @param {string} props.className - The class name for the button.
+ * @param {string} props.variant - The variant of the button.
+ * @param {string} props.size - The size of the button.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"

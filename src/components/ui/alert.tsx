@@ -19,6 +19,10 @@ const alertVariants = cva(
   }
 )
 
+/**
+ * Alert component.
+ * @param {React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>} props - The props for the Alert component.
+ */
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
